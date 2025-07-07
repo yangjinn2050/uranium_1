@@ -19,7 +19,7 @@ def fine_tuning(input_path, output_path):
     json : prediction of table data extraction
     """     
 
-    client = OpenAI(api_key = "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" ) 
+    client = OpenAI(api_key = "User key" ) 
     file_list = os.listdir(input_path)
 
     response = []
@@ -62,7 +62,7 @@ def few_shot(input_path, output_path) :
     Returns:
     json : prediction of table data extraction
     """        
-    client = OpenAI(api_key=  "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")
+    client = OpenAI(api_key=  "User key")
     file_list = os.listdir(input_path)
     for file_name in file_list : 
         with open(input_path + file_name, 'r', encoding='utf-8') as file:
@@ -128,7 +128,7 @@ def zero_shot(input_path, output_path) :
     json : prediction of table data extraction
     """    
     
-    client = OpenAI(api_key = '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')
+    client = OpenAI(api_key = 'User key')
     file_list = os.listdir(input_path)
 
     for file in file_list :
