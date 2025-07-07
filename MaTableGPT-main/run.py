@@ -131,5 +131,6 @@ def model_test(model_, fq):
     print("[MODEL_TEST] input_path:", input_path, "| output_path:", output_path)
     
 
-input_generation("split", "TSV")
-model_test("few_shot", True)
+if __name__ == "__main__":
+    input_generation("split", "TSV")
+    model_test("few_shot", True)
