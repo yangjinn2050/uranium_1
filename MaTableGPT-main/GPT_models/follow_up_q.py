@@ -3,8 +3,8 @@ import os
 from openai import OpenAI
 import pandas as pd
 
-OpenAI.api_key = "User key"
-client = OpenAI(api_key="User key")
+OpenAI.api_key = os.environ["OPENAI_API_KEY"]
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
 class FollowQ:
     def __init__(self, json_path, representation_path, save_path):
@@ -12,29 +12,29 @@ class FollowQ:
         self.representation_path = representation_path
         self.save_path = save_path
         
-        # Questions related to catalysts
-        self.questions_for_catalyst = {
-            "1_list": ["representation", "Question 1. Please tell me the names of catalysts in the contents within the <table> tags of input representation into a Python list. Give me the names of catalysts ONLY. Only output the Python list(like string).\n\n"],
-            "2_list": ["json", "Question 2. Please tell me the names of catalysts from the input json provided by me into a Python list. Only output the Python list(like string).\n\n"],
-            "3_list": ["None", "Question 3. Based on the answer to Question 1, modify or remove any catalysts from the answer to Question 2 and provide the updated list in Python. Give me the names of catalysts ONLY. Only output the Python list.(like string)\n\n"]
-            } 
+        # Questions related to ligands
+        self.questions_for_ligand = {
+            "1_list": ["representation", "Question 1. Please tell me the names of ligands in the contents within the <table> tags of input representation into a Python list. Give me the names of ligands ONLY. Only output the Python list(like string).\n\n"],
+            "2_list": ["json", "Question 2. Please tell me the names of ligands from the input json provided by me into a Python list. Only output the Python list(like string).\n\n"],
+            "3_list": ["None", "Question 3. Based on the answer to Question 1, modify or remove any ligands from the answer to Question 2 and provide the updated list in Python. Give me the names of ligands ONLY. Only output the Python list.(like string)\n\n"]
+            }
         
         # Questions related to performance
         self.questions_for_performance = {
-            "1_list": ["json", "Question 1. Inform me about what performance type does {catalyst_name} have in the input json I provided? Only output the Python list.(like string)\n\n"]
+            "1_list": ["json", "Question 1. Inform me about what property type does {ligand_name} have in the input json I provided? Only output the Python list.(like string)\n\n"]
         }
         
         # Questions related to properties
         self.questions_for_property = {
-            "1_both": ["json", "Question 1. Provide detailed information about all sublayers of the {element} of {catalyst_name} in input json. Remove keys from the dictionary that do not have a value. Present it in either Python list or JSON format. If the {element} is not 'loading', strictly provide it in Python list or JSON format.(like string not ```python and not ```json)\n\n"],
+            "1_both": ["json", "Question 1. Provide detailed information about all sublayers of the {element} of {ligand_name} in input json. Remove keys from the dictionary that do not have a value. Present it in either Python list or JSON format. If the {element} is not 'loading', strictly provide it in Python list or JSON format.(like string not ```python and not ```json)\n\n"],
             "2_str": ["None", "Question 2. If there is any occurrence of 'NA', 'na', 'unknown', or similar content in your recent response, Respond with yes or no. You must answer strictly with yes or no.\n\n"],
             "3_dict": ["None", "Question 3. In the answer to question 1, remove any parts corresponding to 'NA', 'na', 'unknown', or similar contents. Show the modified JSON. Only display the JSON. (like string not ```json)\n\n"],
-            "4_list": ["representation", "Question 4. Based on the input representation, provide values of the {element} of the {catalyst_name} as a Python list. If there is a unit, please provide strictly the value including the unit. The elements of a Python list must be composed of value plus unit. Only output the Python list.(like string not ```python)\n\n"],
+            "4_list": ["representation", "Question 4. Based on the input representation, provide values of the {element} of the {ligand_name} as a Python list. If there is a unit, please provide strictly the value including the unit. The elements of a Python list must be composed of value plus unit. Only output the Python list.(like string not ```python)\n\n"],
             "5_list": ["None", "Question 5. Based on the answer to question 3, provide values of the '''value''' key of the sublayers of the {element} as a Python list. Only output the Python list.(like string not ```python)\n\n"],
             "6_list": ["None", "Question 6. Based on only numerical values, provide a list of elements that exist in the answer to Question 5 but are not present in the the answer to Question 4. Note that unit differences can be ignored if the numbers match. Only output the Python list.(like string not ```python)\n\n"],
             "7_dict": ["json", "Question 7. If elements included in the list that is the answer to question 6 are in the answer to question 1, remove the sub-dictionary containing those elements from the json I provided. If the answer to 6 is a list containing elements, be sure to delete it from json. Show the modified JSON after removal. Only display the JSON. (like string not ```json)\n\n"],
-            "8_dict": ["json", "Question 8. Please tell me the final modified json of {catalyst_name} by reflecting the answer to question 7 in the json I provided. Only output the JSON of {catalyst_name}. the catalyst_name is {catalyst_name}. The first key of the dictionary should be {catalyst_name}. Remove keys from the dictionary that do not have a value. (like string not ```json)"]
-            } 
+            "8_dict": ["json", "Question 8. Please tell me the final modified json of {ligand_name} by reflecting the answer to question 7 in the json I provided. Only output the JSON of {ligand_name}. the ligand_name is {ligand_name}. The first key of the dictionary should be {ligand_name}. Remove keys from the dictionary that do not have a value. (like string not ```json)"]
+            }
 
         # Questions related to electrolyte, reaction_type, substrate
         self.questions_for_representation = {
@@ -47,7 +47,7 @@ class FollowQ:
             } 
         
         # system prompt  
-        self.system_prompt = {"role": "system", "content": "You need to modify the JSON representing the table presenter.\n\n JSON templete : {'catalyst_name' : {'performance_name' : \{property templete\}}}\n property templete : {'electrolyte': '', 'reaction_type': '', 'value': '', 'current_density': '', 'overpotential': '',  'potential': '', 'substrate': '', 'versus': '', 'condition': ''}\n performance_list = [overpotential, tafel_slope, Rct, stability, Cdl, onset_potential, potential, TOF, ECSA, water_splitting_potential, mass_activity, exchange_current_density, Rs, specific_activity, onset_overpotential, BET, surface_area, loading, apparent_activation_energy]\n In the JSON template, 'catalyst_name' and 'performance_name' should be replaced with the actual names present in the input representation."}
+        self.system_prompt = {"role": "system", "content": "You need to modify the JSON representing the table presenter.\n\n JSON template : {'ligand_name' : {PROPERTY_TEMPLATE}}\n PROPERTY_TEMPLATE : {'chemical_formula': '', 'specific_area': '', 'pzc': '', 'water_contact_angle': '', 'initial_uranium_concentration': '', 'adsorbent_amount': '', 'solution_volume': '', 'adsorbent_solution_ratio': '', 'adsorption_amount': '', 'adsorption_time': ''}\n In the JSON template, 'ligand_name' should be replaced with the actual names present in the input representation."}
     
     def input_prompt(self, representation, json_obj, want_type): 
         """
@@ -225,10 +225,10 @@ class FollowQ:
                 question_token_list = []
                 answer_token_list = []
                 final_result = []
-                final_json = {"catalysts": []}
+                final_json = {"ligands": []}
 
                 # Iterate through catalyst questions
-                for key, value in self.questions_for_catalyst.items():
+                for key, value in self.questions_for_ligand.items():
                     if value[0] != "None":
                         messages.append({"role": "user", "content": self.input_prompt(input_representation, input_json, value[0])})
                     messages.append({"role": "user", "content": value[1]})
@@ -255,7 +255,7 @@ class FollowQ:
                     answer_list.append(mod_answer)
 
                     print('--------------------------')
-                    print(self.questions_for_catalyst[key])
+                    print(self.questions_for_ligand[key])
                     print(mod_answer)
                     print(catalyst_result)
                     print('--------------------------')
@@ -441,7 +441,7 @@ class FollowQ:
                         final_result.append(mod_answer)
                     else:
                         input_json = self.load_file(input_type, self.json_path, json_name)
-                        final_json["catalysts"].append(mod_answer)
+                        final_json["ligands"].append(mod_answer)
 
                 if transpose_bool:
                     final_result.append(final_json)
