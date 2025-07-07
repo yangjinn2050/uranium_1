@@ -50,7 +50,7 @@ MaTableGPT
 ### 4) Code usage (run.py)
 **Examples : Input generation (split, tsv)**
 > ```python
-> input_guneration("split", "TSV")
+> input_generation("split", "TSV")
 > ```
 
 **Examples : Data extraction (few shot, follow_up questions)**
