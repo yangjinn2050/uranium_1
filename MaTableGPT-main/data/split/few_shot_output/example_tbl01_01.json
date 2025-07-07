@@ -1,0 +1,20 @@
+﻿{
+    "Co-BPDC/Co-BDC heterojunction": {
+        "overpotential": {
+            "reaction type": "OER",
+            "value": "335 mV",
+            "electrolyte": "1 M KOH",
+            "condition": "10 mA cm–2"
+        },
+        "tafel_slope": {
+            "reaction type": "OER",
+            "value": "72.1 mV/decade",
+            "electrolyte": "1 M KOH"
+        },
+        "stability": {
+            "reaction type": "OER",
+            "value": "80 h",
+            "electrolyte": "1 M KOH"
+        }
+    }
+}

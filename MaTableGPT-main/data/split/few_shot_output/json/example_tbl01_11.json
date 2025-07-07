@@ -1,0 +1,20 @@
+{
+    "Co<sub>0.6</sub>Fe<sub>0.4</sub>-MOF-74": {
+        "overpotential": {
+            "electrolyte": "1 M KOH",
+            "reaction_type": "OER",
+            "value": "280 mV",
+            "condition": "10 mA cm\u20132"
+        },
+        "tafel_slope": {
+            "electrolyte": "1 M KOH",
+            "reaction_type": "OER",
+            "value": "56 mV/decade"
+        },
+        "stability": {
+            "electrolyte": "1 M KOH",
+            "reaction_type": "OER",
+            "value": "12 h"
+        }
+    }
+}

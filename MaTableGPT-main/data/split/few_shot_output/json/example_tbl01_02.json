@@ -1,0 +1,20 @@
+{
+    "Co-BDC": {
+        "overpotential": {
+            "electrolyte": "1 M KOH",
+            "reaction_type": "OER",
+            "value": "392 mV",
+            "current_density": "10 mA cm\u20132"
+        },
+        "tafel_slope": {
+            "reaction_type": "OER",
+            "value": "77.2 mV/decade",
+            "electrolyte": "1 M KOH"
+        },
+        "stability": {
+            "reaction_type": "OER",
+            "value": "28 h",
+            "electrolyte": "1 M KOH"
+        }
+    }
+}

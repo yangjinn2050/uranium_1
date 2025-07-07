@@ -1,0 +1,15 @@
+{
+    "Co-OBA/C": {
+        "overpotential": {
+            "electrolyte": "0.1 M KOH",
+            "reaction_type": "OER",
+            "value": "590 mV",
+            "condition": "10 mA cm\u20132"
+        },
+        "tafel_slope": {
+            "reaction_type": "OER",
+            "value": "85.7 mV/decade",
+            "electrolyte": "0.1 M KOH"
+        }
+    }
+}

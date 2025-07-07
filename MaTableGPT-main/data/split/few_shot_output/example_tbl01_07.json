@@ -1,0 +1,20 @@
+﻿{
+    "2D Co–MOF UNS": {
+        "overpotential": {
+            "reaction type": "OER",
+            "value": "263 mV",
+            "electrolyte": "1 M KOH",
+            "current density": "10 mA cm–2"
+        },
+        "tafel_slope": {
+            "reaction type": "OER",
+            "value": "74 mV/decade",
+            "electrolyte": "1 M KOH"
+        },
+        "stability": {
+            "reaction type": "OER",
+            "value": "3.3 h",
+            "electrolyte": "1 M KOH"
+        }
+    }
+}

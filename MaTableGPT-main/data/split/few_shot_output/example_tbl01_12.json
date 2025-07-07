@@ -1,0 +1,20 @@
+﻿{
+    "Ti3C2Tx-CoBDC": {
+        "overpotential": {
+            "reaction type": "OER",
+            "value": "410 mV",
+            "electrolyte": "0.1 M KOH",
+            "condition": "10 mA cm–2"
+        },
+        "tafel_slope": {
+            "reaction type": "OER",
+            "value": "48.2 mV/decade",
+            "electrolyte": "0.1 M KOH"
+        },
+        "stability": {
+            "reaction type": "OER",
+            "value": "2.8 h",
+            "electrolyte": "0.1 M KOH"
+        }
+    }
+}

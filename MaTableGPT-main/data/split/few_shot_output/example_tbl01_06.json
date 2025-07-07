@@ -1,0 +1,20 @@
+﻿{
+    "UTSA-16": {
+        "overpotential": {
+            "reaction type": "OER",
+            "value": "408 mV",
+            "electrolyte": "1 M KOH",
+            "current density": "10 mA cm–2"
+        },
+        "tafel_slope": {
+            "reaction type": "OER",
+            "value": "77 mV/decade",
+            "electrolyte": "1 M KOH"
+        },
+        "stability": {
+            "reaction type": "OER",
+            "value": "7 h",
+            "electrolyte": "1 M KOH"
+        }
+    }
+}

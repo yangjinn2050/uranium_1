@@ -1,0 +1,20 @@
+{
+    "Fe<sub>2</sub>Ni-BPTC/CC": {
+        "overpotential": {
+            "electrolyte": "0.1 M KOH",
+            "reaction_type": "OER",
+            "value": "365 mV",
+            "condition": "10 mA cm\u20132"
+        },
+        "tafel_slope": {
+            "electrolyte": "0.1 M KOH",
+            "reaction_type": "OER",
+            "value": "77.2 mV/decade"
+        },
+        "stability": {
+            "electrolyte": "0.1 M KOH",
+            "reaction_type": "OER",
+            "value": "15 h"
+        }
+    }
+}

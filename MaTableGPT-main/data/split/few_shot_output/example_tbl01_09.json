@@ -1,0 +1,28 @@
+﻿{
+    "Co2(μ–OH)2(bbta)": {
+        "performance": [
+            {
+                "reaction type": "OER",
+                "overpotential": {
+                    "value": "387 mV",
+                    "electrolyte": "1 M KOH",
+                    "current density": "10 mA cm–2"
+                }
+            },
+            {
+                "reaction type": "OER",
+                "tafel_slope": {
+                    "value": "60 mV/decade",
+                    "electrolyte": "1 M KOH"
+                }
+            },
+            {
+                "reaction type": "OER",
+                "stability": {
+                    "value": "24 h",
+                    "electrolyte": "1 M KOH"
+                }
+            }
+        ]
+    }
+}

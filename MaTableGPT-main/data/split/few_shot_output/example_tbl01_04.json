@@ -1,0 +1,15 @@
+﻿{
+    "Co/MIL-101(Cr)-O": {
+        "overpotential": {
+            "reaction type": "OER",
+            "value": "570 mV",
+            "electrolyte": "0.1 M KOH",
+            "condition": "10 mA cm–2"
+        },
+        "tafel_slope": {
+            "reaction type": "OER",
+            "value": "17 mV/decade",
+            "electrolyte": "0.1 M KOH"
+        }
+    }
+}

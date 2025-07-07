@@ -1,0 +1,15 @@
+{
+    "Co-MOF": {
+        "overpotential": {
+            "electrolyte": "1 M KOH",
+            "reaction_type": "OER",
+            "value": "360 mV",
+            "current_density": "10 mA cm\u20132"
+        },
+        "tafel_slope": {
+            "reaction_type": "OER",
+            "value": "89 mV/decade",
+            "electrolyte": "1 M KOH"
+        }
+    }
+}

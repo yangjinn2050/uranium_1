@@ -1,0 +1,20 @@
+{
+    "3D Gr/Ni-MOF": {
+        "overpotential": {
+            "electrolyte": "0.1 M KOH",
+            "reaction_type": "OER",
+            "value": "370 mV",
+            "current_density": "10 mA cm\u20132"
+        },
+        "tafel_slope": {
+            "reaction_type": "OER",
+            "value": "91 mV/decade",
+            "electrolyte": "0.1 M KOH"
+        },
+        "stability": {
+            "reaction_type": "OER",
+            "value": "20 h",
+            "electrolyte": "0.1 M KOH"
+        }
+    }
+}
