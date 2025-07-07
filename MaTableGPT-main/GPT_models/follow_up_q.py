@@ -3,8 +3,8 @@ import os
 from openai import OpenAI
 import pandas as pd
 
-OpenAI.api_key = "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"
-client = OpenAI(api_key="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")
+OpenAI.api_key = "User key"
+client = OpenAI(api_key="User key")
 
 class FollowQ:
     def __init__(self, json_path, representation_path, save_path):
