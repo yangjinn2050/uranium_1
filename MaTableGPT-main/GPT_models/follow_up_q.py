@@ -38,13 +38,13 @@ class FollowQ:
 
         # Questions related to electrolyte, reaction_type, substrate
         self.questions_for_representation = {
-            "1_str": ["representation_title", "Question 1. If there is any occurrence of 'OER', 'HER', 'oxygen evolution reaction', 'hydrogen evolution reaction' or similar contents in input representation, respond with yes or no. Please answer with either yes or no.\n\n"],
-            "2_str": ["representation_table_caption", "Question 2. If there is any occurrence of 'OER', 'HER', 'oxygen evolution reaction', 'hydrogen evolution reaction' or similar contents in input representation, respond with yes or no. Please answer with either yes or no.\n\n"],
-            "3_str": ["representation_title", "Question 3. Does the input representation contain information corresponding to substrate? Please answer with either yes or no\n\n"],
-            "4_str": ["representation_table_caption", "Question 4. Does the input representation contain information corresponding to substrate? Please answer with either yes or no\n\n"],
-            "5_str": ["representation_title", "Question 5. Does the input representation contain information corresponding to electrolyte? Please answer with either yes or no\n\n"],
-            "6_str": ["representation_table_caption", "Question 6. Does the input representation contain information corresponding to electrolyte? Please answer with either yes or no\n\n"]
-            } 
+            "1_str": ["representation_title", "Question 1. Does the title of the input representation mention any ligands? Please answer with either yes or no.\n\n"],
+            "2_str": ["representation_table_caption", "Question 2. Does the table caption of the input representation mention any ligands? Please answer with either yes or no.\n\n"],
+            "3_str": ["representation_title", "Question 3. Does the title provide information about ligand properties? Please answer with either yes or no\n\n"],
+            "4_str": ["representation_table_caption", "Question 4. Does the table caption provide information about ligand properties? Please answer with either yes or no\n\n"],
+            "5_str": ["representation_title", "Question 5. Does the title include ligand-related experimental conditions? Please answer with either yes or no\n\n"],
+            "6_str": ["representation_table_caption", "Question 6. Does the table caption include ligand-related experimental conditions? Please answer with either yes or no\n\n"]
+            }
         
         # system prompt  
         self.system_prompt = {"role": "system", "content": "You need to modify the JSON representing the table presenter.\n\n JSON template : {'ligand_name' : {PROPERTY_TEMPLATE}}\n PROPERTY_TEMPLATE : {'chemical_formula': '', 'specific_area': '', 'pzc': '', 'water_contact_angle': '', 'initial_uranium_concentration': '', 'adsorbent_amount': '', 'solution_volume': '', 'adsorbent_solution_ratio': '', 'adsorption_amount': '', 'adsorption_time': ''}\n In the JSON template, 'ligand_name' should be replaced with the actual names present in the input representation."}
