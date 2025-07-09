@@ -147,12 +147,12 @@ def zero_shot(input_path, output_path) :
         ligand_q = "Show the ligands present in the table representer as a Python list. Answer must be ONLY python list. Not like '''python ''' Be very very very strict. Other sentences or explanation is not allowed.\n"
         question = ligand_q
         message_.append({"role": "user", "content": question})
-        _, cata_answer = prompt(message_) 
-        ligand_list = eval(cata_answer)
+        _, ligand_answer = prompt(message_)
+        ligand_list = eval(ligand_answer)
         data['question'].append(copy(message_))
-        data['answer'].append(cata_answer)
+        data['answer'].append(ligand_answer)
 
-        message_.append({"role": "assistant", "content": cata_answer}) # 다음 prompt에 이전 답 추가
+        message_.append({"role": "assistant", "content": ligand_answer}) # 다음 prompt에 이전 답 추가
 
         for ligand in ligand_list : 
 
@@ -195,7 +195,7 @@ def zero_shot(input_path, output_path) :
             
             message_ = [{"role": "system", "content": instruction + table_representer}]
             message_.append({"role": "user", "content": ligand_q})
-            message_.append({"role": "assistant", "content": cata_answer})
+            message_.append({"role": "assistant", "content": ligand_answer})
             
         if len(result["ligands"]) == 1 :
             final_result = result["ligands"][0]
