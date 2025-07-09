@@ -20,12 +20,17 @@ conda env create -f requirements_conda.txt
 ```bash
 pip install -r requirements_paper.txt
 ```
-### 2) Download data files
+### 2) Environment variable
+Set your OpenAI API key using `OPENAI_API_KEY`:
+```bash
+export OPENAI_API_KEY=YOUR_KEY
+```
+### 3) Download data files
 ```
 git clone https://github.com/KIST-CSRC/MaTableGPT.git
 git lfs pull
 ```
-## 3) Script architecture
+## 4) Script architecture
 ```
 MaTableGPT
 ├── data
@@ -47,7 +52,7 @@ MaTableGPT
 │ 
 └── run.py
 ```
-### 4) Code usage (run.py)
+### 5) Code usage (run.py)
 **Examples : Input generation (split, tsv)**
 > ```python
 > input_generation("split", "TSV")
