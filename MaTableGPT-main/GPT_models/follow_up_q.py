@@ -218,8 +218,8 @@ class FollowQ:
                 # Initialize messages with system prompt 
                 messages = [self.system_prompt]
 
-                # Catalyst check
-                catalyst_result = {}
+                # Ligand check
+                ligand_result = {}
                 question_list = []
                 answer_list = []
                 question_token_list = []
@@ -227,7 +227,7 @@ class FollowQ:
                 final_result = []
                 final_json = {"ligands": []}
 
-                # Iterate through catalyst questions
+                # Iterate through ligand questions
                 for key, value in self.questions_for_ligand.items():
                     if value[0] != "None":
                         messages.append({"role": "user", "content": self.input_prompt(input_representation, input_json, value[0])})
@@ -250,34 +250,34 @@ class FollowQ:
                             print(json_name)
                             break
                         
-                    catalyst_result[key[0]] = mod_answer
+                    ligand_result[key[0]] = mod_answer
                     question_list.append(value[1])
                     answer_list.append(mod_answer)
 
                     print('--------------------------')
                     print(self.questions_for_ligand[key])
                     print(mod_answer)
-                    print(catalyst_result)
+                    print(ligand_result)
                     print('--------------------------')
 
                     messages.append({"role": "assistant", "content": answer})
-                    if key[0] == '2' and catalyst_result["1"] == catalyst_result["2"]:
+                    if key[0] == '2' and ligand_result["1"] == ligand_result["2"]:
                         print("GO TO THE PERFORMANCE STAGE !!")
                         break   
                         
                 # Performance check
                 performance_result = {}
-                mod_catalyst_list = answer_list[-1]
+                mod_ligand_list = answer_list[-1]
 
-                if len(mod_catalyst_list) > 1:
+                if len(mod_ligand_list) > 1:
                     transpose_bool = True
                 
-                for i in range(len(mod_catalyst_list)):
+                for i in range(len(mod_ligand_list)):
                     messages = [self.system_prompt]
                     for key, value in self.questions_for_performance.items():
                         if value[0] != "None":
                             messages.append({"role": "user", "content": self.input_prompt(input_representation, input_json, value[0])})
-                        question = value[1].format(catalyst_name = '"""'+ mod_catalyst_list[i] +'"""')
+                        question = value[1].format(ligand_name = '"""'+ mod_ligand_list[i] +'"""')
                         messages.append({"role": "user", "content": question})
                         messages, answer = self.prompt(messages) 
                         question_token_list.append(messages)
@@ -295,17 +295,17 @@ class FollowQ:
 
                                 break       
                             
-                        performance_result[f'{mod_catalyst_list[i]}_{key[0]}'] = mod_answer
+                        performance_result[f'{mod_ligand_list[i]}_{key[0]}'] = mod_answer
                         question_list.append(question)
                         answer_list.append(mod_answer)
                         
                         messages.append({"role": "assistant", "content": answer})
-                        if key[0] == '3' and performance_result[f'{mod_catalyst_list[i]}_3'] == []:
+                        if key[0] == '3' and performance_result[f'{mod_ligand_list[i]}_3'] == []:
                             print("GO TO THE PROPERTY STAGE !!")
                             break
                                 
                     if isinstance(answer_list[-1], list):
-                        mod_performance_list = performance_result[f'{mod_catalyst_list[i]}_1']
+                        mod_performance_list = performance_result[f'{mod_ligand_list[i]}_1']
                     else:
                         while not isinstance(answer_list[-1], list):
                             messages.pop()
@@ -324,7 +324,7 @@ class FollowQ:
                     print(mod_performance_list)
                     
                     if mod_performance_list == []:
-                        mod_answer = {str(mod_catalyst_list[i]): {}}
+                        mod_answer = {str(mod_ligand_list[i]): {}}
                     else:    
                         for j in range(len(mod_performance_list)):
                             messages = []
@@ -350,7 +350,7 @@ class FollowQ:
                                 if value[0] != "None":
                                     messages.append({"role": "user", "content": self.input_prompt(input_representation, input_json, value[0])})
                                     
-                                question = value[1].format(catalyst_name = '"""'+ mod_catalyst_list[i] +'"""', element = '"""'+ mod_performance_list[j] +'"""')
+                                question = value[1].format(ligand_name = '"""'+ mod_ligand_list[i] +'"""', element = '"""'+ mod_performance_list[j] +'"""')
                                 messages.append({"role": "user", "content": question})
                                 messages, answer = self.prompt(messages) 
                                 question_token_list.append(messages)
@@ -367,7 +367,7 @@ class FollowQ:
                                         error_file_name.append(json_name)
                                         break   
                                     
-                                property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_' + key[0]] = answer
+                                property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_' + key[0]] = answer
                                 question_list.append(question)
                                 answer_list.append(mod_answer)
                                 
@@ -380,24 +380,24 @@ class FollowQ:
                                 
                                 if key[0] == '2' and mod_answer.lower() == "no":
                                     question_list.append("Question 3. Based on the answer to question 2, remove any parts corresponding to 'NA', 'na', 'unknown', or similar content from the answer to question 1. Show the modified JSON. Only display the JSON. (like string not ```json)")
-                                    answer_list.append(str(property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_1']))
+                                    answer_list.append(str(property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_1']))
                                     messages.append({"role": "user", "content": "Question 3. Based on the answer to question 2, remove any parts corresponding to 'NA', 'na', 'unknown', or similar content from the answer to question 1. Show the modified JSON. Only display the JSON. (like string not ```json)"})    
-                                    messages.append({"role": "assistant", "content": property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_1']})                       
+                                    messages.append({"role": "assistant", "content": property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_1']})                       
                                     skip_questions = True
                                     anwer3_no = True  
                                       
                                 if key[0] == '6' and mod_answer == []:
                                     if anwer3_no:
                                         question_list.append("Question 7. If the answer to question 6 is an empty list, just provide the answer to question 1 as it is.")
-                                        answer_list.append(str(property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_1']))
+                                        answer_list.append(str(property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_1']))
                                         messages.append({"role": "user", "content": "Question 7. If the answer to question 6 is an empty list, just provide the answer to question 1 as it is."})    
-                                        messages.append({"role": "assistant", "content": property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_1']})                       
+                                        messages.append({"role": "assistant", "content": property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_1']})                       
                                         skip_questions = True    
                                     else:
                                         question_list.append("Question 7. If the answer to question 6 is an empty list, just provide the answer to question 3 as it is.")
-                                        answer_list.append(str(property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_3']))
+                                        answer_list.append(str(property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_3']))
                                         messages.append({"role": "user", "content": "Question 7. If the answer to question 6 is an empty list, just provide the answer to question 3 as it is."})    
-                                        messages.append({"role": "assistant", "content": property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_3']})                       
+                                        messages.append({"role": "assistant", "content": property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_3']})                       
                                         skip_questions = True                                           
                                                 
                             if isinstance(mod_answer, dict):
@@ -426,7 +426,7 @@ class FollowQ:
                                         
                                     count += 1  
                                     
-                                    property_result[mod_catalyst_list[i] + '_' + mod_performance_list[j] + '_' + key[0]] = answer
+                                    property_result[mod_ligand_list[i] + '_' + mod_performance_list[j] + '_' + key[0]] = answer
                                     question_list.append(question)
                                     answer_list.append(mod_answer)
                                     
@@ -437,7 +437,7 @@ class FollowQ:
                                      
                                     messages.append({"role": "assistant", "content": answer})
                                                     
-                    if len(mod_catalyst_list) == 1 and split_mode == 'split':
+                    if len(mod_ligand_list) == 1 and split_mode == 'split':
                         final_result.append(mod_answer)
                     else:
                         input_json = self.load_file(input_type, self.json_path, json_name)
